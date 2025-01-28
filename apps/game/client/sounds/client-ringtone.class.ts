@@ -2,14 +2,19 @@ export class Ringtone {
   constructor(private readonly ringtoneName: string) {}
 
   play(): void {
-    PlayPedRingtone(this.ringtoneName, PlayerPedId(), true);
+    if (this.ringtoneName.startsWith("custom")){
+      console.log("custom ringtone")
+      global.exports.domonlib.ui("audio", this.ringtoneName)
+    } else {
+      PlayPedRingtone(this.ringtoneName, PlayerPedId(), true);
+    }
   }
 
   stop(): void {
-    StopPedRingtone(PlayerPedId());
+    global.exports.domonlib.ui("audiostop", null);
   }
 
   static isPlaying(): boolean {
-    return IsPedRingtonePlaying(PlayerPedId());
+    return global.exports.domonlib.ui("audioplaying", null);
   }
 }
